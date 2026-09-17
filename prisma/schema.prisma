@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum UnitStatus {
+  IN_STOCK
+  SOLD
+  REPAIR
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model InventoryUnit {
+  id             String     @id @default(cuid())
+  product        String
+  model          String
+  storage        String
+  color          String
+  imei           String?    @unique
+  serialNumber   String?    @unique
+  purchasePrice  Decimal    @db.Decimal(10, 2)
+  status         UnitStatus @default(IN_STOCK)
+  dateAdded      DateTime   @default(now())
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([status])
+  @@map("inventory_units")
+}
