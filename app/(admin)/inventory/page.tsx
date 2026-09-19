@@ -3,6 +3,8 @@ import Link from "next/link";
 import SearchFilterBar from "./search-filter-bar";
 import UnitActions from "./unit-actions";
 
+export const dynamic = "force-dynamic";
+
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
     IN_STOCK: "bg-teal-50 text-teal-700",

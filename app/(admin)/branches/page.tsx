@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import BranchRowActions from "./branch-row-actions";
 import BranchForm from "./branch-form";
 
+export const dynamic = "force-dynamic";
+
 export default async function BranchesPage() {
   const branches = await prisma.branch.findMany({
     orderBy: [{ isMain: "desc" }, { name: "asc" }],
