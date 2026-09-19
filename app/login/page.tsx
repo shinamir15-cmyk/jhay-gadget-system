@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Button from "@/components/ui/button";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -39,54 +40,54 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+    <div className="flex min-h-screen items-center justify-center bg-surface px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm rounded-lg bg-white p-8 shadow-md"
+        className="w-full max-w-sm rounded-lg bg-card p-8 shadow-sm ring-1 ring-ink-400/15"
       >
-        <h1 className="mb-6 text-center text-2xl font-semibold text-gray-800">
-          Inventory System Login
-        </h1>
+        <div className="mb-6 flex items-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-brand-600 text-sm font-semibold text-white">
+            G
+          </span>
+          <div>
+            <h1 className="text-base font-semibold tracking-tight text-ink-950">
+              Gadget Store
+            </h1>
+            <p className="text-xs text-ink-600">Inventory System</p>
+          </div>
+        </div>
 
         {error && (
-          <div className="mb-4 rounded bg-red-50 px-4 py-2 text-sm text-red-600">
+          <div className="mb-4 rounded-md bg-red-50 px-4 py-2 text-sm text-red-700">
             {error}
           </div>
         )}
 
         <div className="mb-4">
-          <label className="mb-1 block text-sm font-medium text-gray-700">
-            Email
-          </label>
+          <label className="mb-1 block text-sm font-medium text-ink-800">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            className="w-full rounded-md border border-ink-400/30 px-3 py-2 text-sm text-ink-950 focus:border-brand-600 focus:outline-none"
           />
         </div>
 
         <div className="mb-6">
-          <label className="mb-1 block text-sm font-medium text-gray-700">
-            Password
-          </label>
+          <label className="mb-1 block text-sm font-medium text-ink-800">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            className="w-full rounded-md border border-ink-400/30 px-3 py-2 text-sm text-ink-950 focus:border-brand-600 focus:outline-none"
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded bg-blue-600 py-2 font-medium text-white hover:bg-blue-700 disabled:opacity-50"
-        >
-          {loading ? "Logging in..." : "Log In"}
-        </button>
+        <Button type="submit" disabled={loading} className="w-full">
+          {loading ? "Logging in…" : "Log In"}
+        </Button>
       </form>
     </div>
   );

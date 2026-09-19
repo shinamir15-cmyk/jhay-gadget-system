@@ -1,13 +1,28 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "../../../generated/prisma/client";
+import { requireAuth } from "@/lib/require-auth";
 
 export async function POST(request: Request) {
+  const session = await requireAuth();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
-    const { product, model, storage, color, imei, serialNumber, purchasePrice, dateAdded } = body;
+    const {
+      product,
+      model,
+      storage,
+      color,
+      imei,
+      serialNumber,
+      purchasePrice,
+      dateAdded,
+      branchId,
+    } = body;
 
-    // Required field validation
     if (!product?.trim() || !model?.trim()) {
       return NextResponse.json(
         { error: "Product and model are required." },
@@ -23,6 +38,18 @@ export async function POST(request: Request) {
       );
     }
 
+    let resolvedBranchId = branchId;
+    if (!resolvedBranchId) {
+      const mainBranch = await prisma.branch.findFirst({ where: { isMain: true } });
+      if (!mainBranch) {
+        return NextResponse.json(
+          { error: "No Main Store branch configured." },
+          { status: 500 }
+        );
+      }
+      resolvedBranchId = mainBranch.id;
+    }
+
     const unit = await prisma.inventoryUnit.create({
       data: {
         product: product.trim(),
@@ -34,6 +61,7 @@ export async function POST(request: Request) {
         purchasePrice: price,
         dateAdded: dateAdded ? new Date(dateAdded) : new Date(),
         status: "IN_STOCK",
+        currentBranchId: resolvedBranchId,
       },
     });
 

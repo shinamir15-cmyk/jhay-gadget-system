@@ -15,16 +15,16 @@ export default async function DashboardPage() {
   const stats = await getStats();
 
   const cards = [
-    { label: "Total Units", value: stats.total, color: "bg-gray-800" },
-    { label: "Available", value: stats.available, color: "bg-green-600" },
-    { label: "Sold", value: stats.sold, color: "bg-blue-600" },
-    { label: "Repair", value: stats.repair, color: "bg-amber-600" },
+    { label: "Total Units", value: stats.total, edge: "bg-ink-950" },
+    { label: "Available", value: stats.available, edge: "bg-teal-600" },
+    { label: "Sold", value: stats.sold, edge: "bg-brand-600" },
+    { label: "Repair", value: stats.repair, edge: "bg-amber-600" },
   ];
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
-      <p className="mt-1 text-sm text-gray-500">
+      <h1 className="text-2xl font-semibold tracking-tight text-ink-950">Dashboard</h1>
+      <p className="mt-1 text-sm text-ink-600">
         Live overview of your gadget inventory.
       </p>
 
@@ -32,14 +32,12 @@ export default async function DashboardPage() {
         {cards.map((card) => (
           <div
             key={card.label}
-            className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-200"
+            className="overflow-hidden rounded-lg bg-card shadow-sm ring-1 ring-ink-400/15"
           >
-            <div className={`h-1 ${card.color}`} />
+            <div className={`h-1 ${card.edge}`} />
             <div className="p-5">
-              <p className="text-sm font-medium text-gray-500">
-                {card.label}
-              </p>
-              <p className="mt-2 text-3xl font-bold text-gray-900">
+              <p className="text-sm font-medium text-ink-600">{card.label}</p>
+              <p className="mt-2 text-3xl font-semibold tracking-tight text-ink-950">
                 {card.value}
               </p>
             </div>

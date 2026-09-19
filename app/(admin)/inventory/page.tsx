@@ -1,24 +1,26 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import UnitActions from "./unit-actions";
 import SearchFilterBar from "./search-filter-bar";
+import UnitActions from "./unit-actions";
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    IN_STOCK: "bg-green-100 text-green-700",
-    SOLD: "bg-blue-100 text-blue-700",
-    REPAIR: "bg-amber-100 text-amber-700",
+    IN_STOCK: "bg-teal-50 text-teal-700",
+    SOLD: "bg-brand-50 text-brand-700",
+    REPAIR: "bg-amber-50 text-amber-700",
+    SHIPPED: "bg-ink-400/15 text-ink-800",
   };
 
   const labels: Record<string, string> = {
-    IN_STOCK: "IN STOCK",
-    SOLD: "SOLD",
-    REPAIR: "REPAIR",
+    IN_STOCK: "In Stock",
+    SOLD: "Sold",
+    REPAIR: "Repair",
+    SHIPPED: "Shipped",
   };
 
   return (
     <span
-      className={`inline-block rounded-full px-2.5 py-1 text-xs font-semibold ${styles[status] ?? "bg-gray-100 text-gray-700"}`}
+      className={`inline-block rounded-md px-2.5 py-1 text-xs font-medium ${styles[status] ?? "bg-ink-400/10 text-ink-600"}`}
     >
       {labels[status] ?? status}
     </span>
@@ -47,89 +49,90 @@ export default async function InventoryPage({
   const query = params.q?.trim() ?? "";
   const statusFilter = params.status;
 
-const words = query.split(/\s+/).filter(Boolean);
+  const words = query.split(/\s+/).filter(Boolean);
 
-const searchConditions = words.map((word) => ({
-  OR: [
-    { imei: { contains: word } },
-    { serialNumber: { contains: word } },
-    { product: { contains: word } },
-    { model: { contains: word } },
-    { storage: { contains: word } },
-    { color: { contains: word } },
-  ],
-}));
-
-const units = await prisma.inventoryUnit.findMany({
-  where: {
-    AND: [
-      statusFilter && statusFilter !== "ALL"
-        ? { status: statusFilter as "IN_STOCK" | "SOLD" | "REPAIR" }
-        : {},
-      ...searchConditions,
+  const searchConditions = words.map((word) => ({
+    OR: [
+      { imei: { contains: word } },
+      { serialNumber: { contains: word } },
+      { product: { contains: word } },
+      { model: { contains: word } },
+      { storage: { contains: word } },
+      { color: { contains: word } },
     ],
-  },
-  orderBy: { dateAdded: "desc" },
-});
+  }));
+
+  const units = await prisma.inventoryUnit.findMany({
+    where: {
+      AND: [
+        statusFilter && statusFilter !== "ALL"
+          ? { status: statusFilter as "IN_STOCK" | "SOLD" | "REPAIR" | "SHIPPED" }
+          : {},
+        ...searchConditions,
+      ],
+    },
+    include: { currentBranch: true },
+    orderBy: { dateAdded: "desc" },
+  });
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-800">Inventory</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-semibold tracking-tight text-ink-950">Inventory</h1>
+          <p className="mt-1 text-sm text-ink-600">
             {units.length} unit{units.length !== 1 ? "s" : ""} total
           </p>
         </div>
         <Link
           href="/inventory/add"
-          className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          className="inline-block rounded-md bg-brand-600 px-4 py-2 text-center text-sm font-medium text-white hover:bg-brand-700"
         >
           + Add Unit
         </Link>
       </div>
 
-    <SearchFilterBar />
+      <SearchFilterBar />
 
-      <div className="mt-4 overflow-x-auto rounded-lg bg-white shadow-sm ring-1 ring-gray-200">
-        <table className="min-w-full divide-y divide-gray-200 text-sm">
-          <thead className="bg-gray-50">
+      <div className="mt-4 overflow-x-auto rounded-lg bg-card shadow-sm ring-1 ring-ink-400/15">
+        <table className="min-w-full divide-y divide-ink-400/15 text-sm">
+          <thead className="bg-surface">
             <tr>
-              {["IMEI", "Product", "Model", "Storage", "Color", "Purchase Price", "Status", "Date Added", "Actions"].map(
+              {["IMEI", "Product", "Model", "Storage", "Color", "Purchase Price", "Status", "Branch", "Date Added", "Actions"].map(
                 (header) => (
-                  <th
-                    key={header}
-                    className="px-4 py-3 text-left font-medium text-gray-500"
-                  >
+                  <th key={header} className="px-4 py-3 text-left font-medium text-ink-600">
                     {header}
                   </th>
                 )
               )}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-ink-400/10">
             {units.length === 0 ? (
               <tr>
-                <td colSpan={9} className="px-4 py-10 text-center text-gray-400">
-                  No units yet. Click "Add Unit" to get started.
+                <td colSpan={10} className="px-4 py-10 text-center text-ink-400">
+                  {query || (statusFilter && statusFilter !== "ALL")
+                    ? "No units match your search or filter."
+                    : 'No units yet. Click "Add Unit" to get started.'}
                 </td>
               </tr>
             ) : (
               units.map((unit) => (
-                <tr key={unit.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 text-gray-700">{unit.imei ?? "—"}</td>
-                  <td className="px-4 py-3 font-medium text-gray-900">{unit.product}</td>
-                  <td className="px-4 py-3 text-gray-700">{unit.model}</td>
-                  <td className="px-4 py-3 text-gray-700">{unit.storage || "—"}</td>
-                  <td className="px-4 py-3 text-gray-700">{unit.color || "—"}</td>
-                  <td className="px-4 py-3 text-gray-700">{formatPrice(unit.purchasePrice)}</td>
+                <tr key={unit.id} className="hover:bg-surface">
+                  <td className="px-4 py-3 text-ink-800">{unit.imei ?? "—"}</td>
+                  <td className="px-4 py-3 font-medium text-ink-950">{unit.product}</td>
+                  <td className="px-4 py-3 text-ink-800">{unit.model}</td>
+                  <td className="px-4 py-3 text-ink-800">{unit.storage || "—"}</td>
+                  <td className="px-4 py-3 text-ink-800">{unit.color || "—"}</td>
+                  <td className="px-4 py-3 text-ink-800">{formatPrice(unit.purchasePrice)}</td>
                   <td className="px-4 py-3">
                     <StatusBadge status={unit.status} />
                   </td>
-                  <td className="px-4 py-3 text-gray-700">{formatDate(unit.dateAdded)}</td>
-                    <td className="px-4 py-3">
+                  <td className="px-4 py-3 text-ink-800">{unit.currentBranch.name}</td>
+                  <td className="px-4 py-3 text-ink-800">{formatDate(unit.dateAdded)}</td>
+                  <td className="px-4 py-3">
                     <UnitActions id={unit.id} status={unit.status} />
-                    </td>
+                  </td>
                 </tr>
               ))
             )}

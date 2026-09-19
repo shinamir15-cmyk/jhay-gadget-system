@@ -27,7 +27,6 @@ export default function SearchFilterBar() {
     router.push(queryString ? `${pathname}?${queryString}` : pathname);
   }
 
-  // Debounce search input so we don't push a new URL on every keystroke
   useEffect(() => {
     const timeout = setTimeout(() => {
       updateUrl(query, status);
@@ -42,18 +41,18 @@ export default function SearchFilterBar() {
   }
 
   return (
-    <div className="mt-4 flex flex-wrap gap-3">
+    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search IMEI, serial, product, model..."
-        className="w-full max-w-sm rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+        placeholder="Search IMEI, serial, product, model, storage, color…"
+        className="w-full rounded-md border border-ink-400/30 bg-card px-3 py-2 text-sm text-ink-950 placeholder:text-ink-400 focus:border-brand-600 focus:outline-none sm:max-w-sm"
       />
       <select
         value={status}
         onChange={handleStatusChange}
-        className="rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+        className="w-full rounded-md border border-ink-400/30 bg-card px-3 py-2 text-sm text-ink-950 focus:border-brand-600 focus:outline-none sm:w-auto"
       >
         {STATUS_OPTIONS.map((opt) => (
           <option key={opt.value} value={opt.value}>

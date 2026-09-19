@@ -12,9 +12,7 @@ function createPrismaClient() {
     user: process.env.DB_USER!,
     password: process.env.DB_PASSWORD!,
     database: process.env.DB_NAME!,
-    
-    // Important for Vercel/serverless
-    connectionLimit: 3,
+    connectionLimit: 10,
     acquireTimeout: 10000,
     connectTimeout: 10000,
   });
@@ -22,8 +20,7 @@ function createPrismaClient() {
   return new PrismaClient({ adapter });
 }
 
-export const prisma =
-  globalForPrisma.prisma ?? createPrismaClient();
+export const prisma = globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;

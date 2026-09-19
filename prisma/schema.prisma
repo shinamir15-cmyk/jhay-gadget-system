@@ -11,6 +11,7 @@ enum UnitStatus {
   IN_STOCK
   SOLD
   REPAIR
+  SHIPPED
 }
 
 model User {
@@ -21,23 +22,69 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  shipments Shipment[]
+
   @@map("users")
 }
 
+model Branch {
+  id        String   @id @default(cuid())
+  name      String
+  code      String?  @unique
+  isMain    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  units         InventoryUnit[]
+  shipmentsFrom Shipment[]      @relation("ShipmentFrom")
+  shipmentsTo   Shipment[]      @relation("ShipmentTo")
+
+  @@map("branches")
+}
+
 model InventoryUnit {
-  id             String     @id @default(cuid())
-  product        String
-  model          String
-  storage        String
-  color          String
-  imei           String?    @unique
-  serialNumber   String?    @unique
-  purchasePrice  Decimal    @db.Decimal(10, 2)
-  status         UnitStatus @default(IN_STOCK)
-  dateAdded      DateTime   @default(now())
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  id            String     @id @default(cuid())
+  product       String
+  model         String
+  storage       String
+  color         String
+  imei          String?    @unique
+  serialNumber  String?    @unique
+  purchasePrice Decimal    @db.Decimal(10, 2)
+  status        UnitStatus @default(IN_STOCK)
+  dateAdded     DateTime   @default(now())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  currentBranchId String
+  currentBranch   Branch   @relation(fields: [currentBranchId], references: [id])
+
+  shipments Shipment[]
 
   @@index([status])
+  @@index([currentBranchId])
   @@map("inventory_units")
+}
+
+model Shipment {
+  id     String        @id @default(cuid())
+  unitId String
+  unit   InventoryUnit @relation(fields: [unitId], references: [id])
+
+  fromBranchId String
+  fromBranch   Branch @relation("ShipmentFrom", fields: [fromBranchId], references: [id])
+
+  toBranchId String
+  toBranch   Branch @relation("ShipmentTo", fields: [toBranchId], references: [id])
+
+  shippedById String?
+  shippedBy   User?   @relation(fields: [shippedById], references: [id])
+
+  batchId   String
+  shippedAt DateTime @default(now())
+
+  @@index([unitId])
+  @@index([toBranchId])
+  @@index([batchId])
+  @@map("shipments")
 }

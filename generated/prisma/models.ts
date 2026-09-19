@@ -9,5 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/Branch'
 export type * from './models/InventoryUnit'
+export type * from './models/Shipment'
 export type * from './commonInputTypes'

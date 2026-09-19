@@ -12,7 +12,8 @@
 export const UnitStatus = {
   IN_STOCK: 'IN_STOCK',
   SOLD: 'SOLD',
-  REPAIR: 'REPAIR'
+  REPAIR: 'REPAIR',
+  SHIPPED: 'SHIPPED'
 } as const
 
 export type UnitStatus = (typeof UnitStatus)[keyof typeof UnitStatus]

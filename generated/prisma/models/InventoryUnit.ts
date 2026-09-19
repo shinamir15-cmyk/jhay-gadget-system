@@ -47,6 +47,7 @@ export type InventoryUnitMinAggregateOutputType = {
   dateAdded: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  currentBranchId: string | null
 }
 
 export type InventoryUnitMaxAggregateOutputType = {
@@ -62,6 +63,7 @@ export type InventoryUnitMaxAggregateOutputType = {
   dateAdded: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  currentBranchId: string | null
 }
 
 export type InventoryUnitCountAggregateOutputType = {
@@ -77,6 +79,7 @@ export type InventoryUnitCountAggregateOutputType = {
   dateAdded: number
   createdAt: number
   updatedAt: number
+  currentBranchId: number
   _all: number
 }
 
@@ -102,6 +105,7 @@ export type InventoryUnitMinAggregateInputType = {
   dateAdded?: true
   createdAt?: true
   updatedAt?: true
+  currentBranchId?: true
 }
 
 export type InventoryUnitMaxAggregateInputType = {
@@ -117,6 +121,7 @@ export type InventoryUnitMaxAggregateInputType = {
   dateAdded?: true
   createdAt?: true
   updatedAt?: true
+  currentBranchId?: true
 }
 
 export type InventoryUnitCountAggregateInputType = {
@@ -132,6 +137,7 @@ export type InventoryUnitCountAggregateInputType = {
   dateAdded?: true
   createdAt?: true
   updatedAt?: true
+  currentBranchId?: true
   _all?: true
 }
 
@@ -234,6 +240,7 @@ export type InventoryUnitGroupByOutputType = {
   dateAdded: Date
   createdAt: Date
   updatedAt: Date
+  currentBranchId: string
   _count: InventoryUnitCountAggregateOutputType | null
   _avg: InventoryUnitAvgAggregateOutputType | null
   _sum: InventoryUnitSumAggregateOutputType | null
@@ -272,6 +279,9 @@ export type InventoryUnitWhereInput = {
   dateAdded?: Prisma.DateTimeFilter<"InventoryUnit"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"InventoryUnit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InventoryUnit"> | Date | string
+  currentBranchId?: Prisma.StringFilter<"InventoryUnit"> | string
+  currentBranch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
+  shipments?: Prisma.ShipmentListRelationFilter
 }
 
 export type InventoryUnitOrderByWithRelationInput = {
@@ -287,6 +297,9 @@ export type InventoryUnitOrderByWithRelationInput = {
   dateAdded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  currentBranchId?: Prisma.SortOrder
+  currentBranch?: Prisma.BranchOrderByWithRelationInput
+  shipments?: Prisma.ShipmentOrderByRelationAggregateInput
   _relevance?: Prisma.InventoryUnitOrderByRelevanceInput
 }
 
@@ -306,6 +319,9 @@ export type InventoryUnitWhereUniqueInput = Prisma.AtLeast<{
   dateAdded?: Prisma.DateTimeFilter<"InventoryUnit"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"InventoryUnit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InventoryUnit"> | Date | string
+  currentBranchId?: Prisma.StringFilter<"InventoryUnit"> | string
+  currentBranch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
+  shipments?: Prisma.ShipmentListRelationFilter
 }, "id" | "imei" | "serialNumber">
 
 export type InventoryUnitOrderByWithAggregationInput = {
@@ -321,6 +337,7 @@ export type InventoryUnitOrderByWithAggregationInput = {
   dateAdded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  currentBranchId?: Prisma.SortOrder
   _count?: Prisma.InventoryUnitCountOrderByAggregateInput
   _avg?: Prisma.InventoryUnitAvgOrderByAggregateInput
   _max?: Prisma.InventoryUnitMaxOrderByAggregateInput
@@ -344,6 +361,7 @@ export type InventoryUnitScalarWhereWithAggregatesInput = {
   dateAdded?: Prisma.DateTimeWithAggregatesFilter<"InventoryUnit"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InventoryUnit"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"InventoryUnit"> | Date | string
+  currentBranchId?: Prisma.StringWithAggregatesFilter<"InventoryUnit"> | string
 }
 
 export type InventoryUnitCreateInput = {
@@ -359,6 +377,8 @@ export type InventoryUnitCreateInput = {
   dateAdded?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  currentBranch: Prisma.BranchCreateNestedOneWithoutUnitsInput
+  shipments?: Prisma.ShipmentCreateNestedManyWithoutUnitInput
 }
 
 export type InventoryUnitUncheckedCreateInput = {
@@ -374,6 +394,8 @@ export type InventoryUnitUncheckedCreateInput = {
   dateAdded?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  currentBranchId: string
+  shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUnitInput
 }
 
 export type InventoryUnitUpdateInput = {
@@ -389,6 +411,8 @@ export type InventoryUnitUpdateInput = {
   dateAdded?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentBranch?: Prisma.BranchUpdateOneRequiredWithoutUnitsNestedInput
+  shipments?: Prisma.ShipmentUpdateManyWithoutUnitNestedInput
 }
 
 export type InventoryUnitUncheckedUpdateInput = {
@@ -404,6 +428,8 @@ export type InventoryUnitUncheckedUpdateInput = {
   dateAdded?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentBranchId?: Prisma.StringFieldUpdateOperationsInput | string
+  shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUnitNestedInput
 }
 
 export type InventoryUnitCreateManyInput = {
@@ -419,6 +445,7 @@ export type InventoryUnitCreateManyInput = {
   dateAdded?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  currentBranchId: string
 }
 
 export type InventoryUnitUpdateManyMutationInput = {
@@ -449,6 +476,17 @@ export type InventoryUnitUncheckedUpdateManyInput = {
   dateAdded?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentBranchId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type InventoryUnitListRelationFilter = {
+  every?: Prisma.InventoryUnitWhereInput
+  some?: Prisma.InventoryUnitWhereInput
+  none?: Prisma.InventoryUnitWhereInput
+}
+
+export type InventoryUnitOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type InventoryUnitOrderByRelevanceInput = {
@@ -470,6 +508,7 @@ export type InventoryUnitCountOrderByAggregateInput = {
   dateAdded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  currentBranchId?: Prisma.SortOrder
 }
 
 export type InventoryUnitAvgOrderByAggregateInput = {
@@ -489,6 +528,7 @@ export type InventoryUnitMaxOrderByAggregateInput = {
   dateAdded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  currentBranchId?: Prisma.SortOrder
 }
 
 export type InventoryUnitMinOrderByAggregateInput = {
@@ -504,14 +544,58 @@ export type InventoryUnitMinOrderByAggregateInput = {
   dateAdded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  currentBranchId?: Prisma.SortOrder
 }
 
 export type InventoryUnitSumOrderByAggregateInput = {
   purchasePrice?: Prisma.SortOrder
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type InventoryUnitScalarRelationFilter = {
+  is?: Prisma.InventoryUnitWhereInput
+  isNot?: Prisma.InventoryUnitWhereInput
+}
+
+export type InventoryUnitCreateNestedManyWithoutCurrentBranchInput = {
+  create?: Prisma.XOR<Prisma.InventoryUnitCreateWithoutCurrentBranchInput, Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput> | Prisma.InventoryUnitCreateWithoutCurrentBranchInput[] | Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput[]
+  connectOrCreate?: Prisma.InventoryUnitCreateOrConnectWithoutCurrentBranchInput | Prisma.InventoryUnitCreateOrConnectWithoutCurrentBranchInput[]
+  createMany?: Prisma.InventoryUnitCreateManyCurrentBranchInputEnvelope
+  connect?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+}
+
+export type InventoryUnitUncheckedCreateNestedManyWithoutCurrentBranchInput = {
+  create?: Prisma.XOR<Prisma.InventoryUnitCreateWithoutCurrentBranchInput, Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput> | Prisma.InventoryUnitCreateWithoutCurrentBranchInput[] | Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput[]
+  connectOrCreate?: Prisma.InventoryUnitCreateOrConnectWithoutCurrentBranchInput | Prisma.InventoryUnitCreateOrConnectWithoutCurrentBranchInput[]
+  createMany?: Prisma.InventoryUnitCreateManyCurrentBranchInputEnvelope
+  connect?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+}
+
+export type InventoryUnitUpdateManyWithoutCurrentBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryUnitCreateWithoutCurrentBranchInput, Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput> | Prisma.InventoryUnitCreateWithoutCurrentBranchInput[] | Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput[]
+  connectOrCreate?: Prisma.InventoryUnitCreateOrConnectWithoutCurrentBranchInput | Prisma.InventoryUnitCreateOrConnectWithoutCurrentBranchInput[]
+  upsert?: Prisma.InventoryUnitUpsertWithWhereUniqueWithoutCurrentBranchInput | Prisma.InventoryUnitUpsertWithWhereUniqueWithoutCurrentBranchInput[]
+  createMany?: Prisma.InventoryUnitCreateManyCurrentBranchInputEnvelope
+  set?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+  disconnect?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+  delete?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+  connect?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+  update?: Prisma.InventoryUnitUpdateWithWhereUniqueWithoutCurrentBranchInput | Prisma.InventoryUnitUpdateWithWhereUniqueWithoutCurrentBranchInput[]
+  updateMany?: Prisma.InventoryUnitUpdateManyWithWhereWithoutCurrentBranchInput | Prisma.InventoryUnitUpdateManyWithWhereWithoutCurrentBranchInput[]
+  deleteMany?: Prisma.InventoryUnitScalarWhereInput | Prisma.InventoryUnitScalarWhereInput[]
+}
+
+export type InventoryUnitUncheckedUpdateManyWithoutCurrentBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryUnitCreateWithoutCurrentBranchInput, Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput> | Prisma.InventoryUnitCreateWithoutCurrentBranchInput[] | Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput[]
+  connectOrCreate?: Prisma.InventoryUnitCreateOrConnectWithoutCurrentBranchInput | Prisma.InventoryUnitCreateOrConnectWithoutCurrentBranchInput[]
+  upsert?: Prisma.InventoryUnitUpsertWithWhereUniqueWithoutCurrentBranchInput | Prisma.InventoryUnitUpsertWithWhereUniqueWithoutCurrentBranchInput[]
+  createMany?: Prisma.InventoryUnitCreateManyCurrentBranchInputEnvelope
+  set?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+  disconnect?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+  delete?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+  connect?: Prisma.InventoryUnitWhereUniqueInput | Prisma.InventoryUnitWhereUniqueInput[]
+  update?: Prisma.InventoryUnitUpdateWithWhereUniqueWithoutCurrentBranchInput | Prisma.InventoryUnitUpdateWithWhereUniqueWithoutCurrentBranchInput[]
+  updateMany?: Prisma.InventoryUnitUpdateManyWithWhereWithoutCurrentBranchInput | Prisma.InventoryUnitUpdateManyWithWhereWithoutCurrentBranchInput[]
+  deleteMany?: Prisma.InventoryUnitScalarWhereInput | Prisma.InventoryUnitScalarWhereInput[]
 }
 
 export type DecimalFieldUpdateOperationsInput = {
@@ -526,6 +610,268 @@ export type EnumUnitStatusFieldUpdateOperationsInput = {
   set?: $Enums.UnitStatus
 }
 
+export type InventoryUnitCreateNestedOneWithoutShipmentsInput = {
+  create?: Prisma.XOR<Prisma.InventoryUnitCreateWithoutShipmentsInput, Prisma.InventoryUnitUncheckedCreateWithoutShipmentsInput>
+  connectOrCreate?: Prisma.InventoryUnitCreateOrConnectWithoutShipmentsInput
+  connect?: Prisma.InventoryUnitWhereUniqueInput
+}
+
+export type InventoryUnitUpdateOneRequiredWithoutShipmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryUnitCreateWithoutShipmentsInput, Prisma.InventoryUnitUncheckedCreateWithoutShipmentsInput>
+  connectOrCreate?: Prisma.InventoryUnitCreateOrConnectWithoutShipmentsInput
+  upsert?: Prisma.InventoryUnitUpsertWithoutShipmentsInput
+  connect?: Prisma.InventoryUnitWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryUnitUpdateToOneWithWhereWithoutShipmentsInput, Prisma.InventoryUnitUpdateWithoutShipmentsInput>, Prisma.InventoryUnitUncheckedUpdateWithoutShipmentsInput>
+}
+
+export type InventoryUnitCreateWithoutCurrentBranchInput = {
+  id?: string
+  product: string
+  model: string
+  storage: string
+  color: string
+  imei?: string | null
+  serialNumber?: string | null
+  purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.UnitStatus
+  dateAdded?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  shipments?: Prisma.ShipmentCreateNestedManyWithoutUnitInput
+}
+
+export type InventoryUnitUncheckedCreateWithoutCurrentBranchInput = {
+  id?: string
+  product: string
+  model: string
+  storage: string
+  color: string
+  imei?: string | null
+  serialNumber?: string | null
+  purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.UnitStatus
+  dateAdded?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  shipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutUnitInput
+}
+
+export type InventoryUnitCreateOrConnectWithoutCurrentBranchInput = {
+  where: Prisma.InventoryUnitWhereUniqueInput
+  create: Prisma.XOR<Prisma.InventoryUnitCreateWithoutCurrentBranchInput, Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput>
+}
+
+export type InventoryUnitCreateManyCurrentBranchInputEnvelope = {
+  data: Prisma.InventoryUnitCreateManyCurrentBranchInput | Prisma.InventoryUnitCreateManyCurrentBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type InventoryUnitUpsertWithWhereUniqueWithoutCurrentBranchInput = {
+  where: Prisma.InventoryUnitWhereUniqueInput
+  update: Prisma.XOR<Prisma.InventoryUnitUpdateWithoutCurrentBranchInput, Prisma.InventoryUnitUncheckedUpdateWithoutCurrentBranchInput>
+  create: Prisma.XOR<Prisma.InventoryUnitCreateWithoutCurrentBranchInput, Prisma.InventoryUnitUncheckedCreateWithoutCurrentBranchInput>
+}
+
+export type InventoryUnitUpdateWithWhereUniqueWithoutCurrentBranchInput = {
+  where: Prisma.InventoryUnitWhereUniqueInput
+  data: Prisma.XOR<Prisma.InventoryUnitUpdateWithoutCurrentBranchInput, Prisma.InventoryUnitUncheckedUpdateWithoutCurrentBranchInput>
+}
+
+export type InventoryUnitUpdateManyWithWhereWithoutCurrentBranchInput = {
+  where: Prisma.InventoryUnitScalarWhereInput
+  data: Prisma.XOR<Prisma.InventoryUnitUpdateManyMutationInput, Prisma.InventoryUnitUncheckedUpdateManyWithoutCurrentBranchInput>
+}
+
+export type InventoryUnitScalarWhereInput = {
+  AND?: Prisma.InventoryUnitScalarWhereInput | Prisma.InventoryUnitScalarWhereInput[]
+  OR?: Prisma.InventoryUnitScalarWhereInput[]
+  NOT?: Prisma.InventoryUnitScalarWhereInput | Prisma.InventoryUnitScalarWhereInput[]
+  id?: Prisma.StringFilter<"InventoryUnit"> | string
+  product?: Prisma.StringFilter<"InventoryUnit"> | string
+  model?: Prisma.StringFilter<"InventoryUnit"> | string
+  storage?: Prisma.StringFilter<"InventoryUnit"> | string
+  color?: Prisma.StringFilter<"InventoryUnit"> | string
+  imei?: Prisma.StringNullableFilter<"InventoryUnit"> | string | null
+  serialNumber?: Prisma.StringNullableFilter<"InventoryUnit"> | string | null
+  purchasePrice?: Prisma.DecimalFilter<"InventoryUnit"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumUnitStatusFilter<"InventoryUnit"> | $Enums.UnitStatus
+  dateAdded?: Prisma.DateTimeFilter<"InventoryUnit"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"InventoryUnit"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"InventoryUnit"> | Date | string
+  currentBranchId?: Prisma.StringFilter<"InventoryUnit"> | string
+}
+
+export type InventoryUnitCreateWithoutShipmentsInput = {
+  id?: string
+  product: string
+  model: string
+  storage: string
+  color: string
+  imei?: string | null
+  serialNumber?: string | null
+  purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.UnitStatus
+  dateAdded?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  currentBranch: Prisma.BranchCreateNestedOneWithoutUnitsInput
+}
+
+export type InventoryUnitUncheckedCreateWithoutShipmentsInput = {
+  id?: string
+  product: string
+  model: string
+  storage: string
+  color: string
+  imei?: string | null
+  serialNumber?: string | null
+  purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.UnitStatus
+  dateAdded?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  currentBranchId: string
+}
+
+export type InventoryUnitCreateOrConnectWithoutShipmentsInput = {
+  where: Prisma.InventoryUnitWhereUniqueInput
+  create: Prisma.XOR<Prisma.InventoryUnitCreateWithoutShipmentsInput, Prisma.InventoryUnitUncheckedCreateWithoutShipmentsInput>
+}
+
+export type InventoryUnitUpsertWithoutShipmentsInput = {
+  update: Prisma.XOR<Prisma.InventoryUnitUpdateWithoutShipmentsInput, Prisma.InventoryUnitUncheckedUpdateWithoutShipmentsInput>
+  create: Prisma.XOR<Prisma.InventoryUnitCreateWithoutShipmentsInput, Prisma.InventoryUnitUncheckedCreateWithoutShipmentsInput>
+  where?: Prisma.InventoryUnitWhereInput
+}
+
+export type InventoryUnitUpdateToOneWithWhereWithoutShipmentsInput = {
+  where?: Prisma.InventoryUnitWhereInput
+  data: Prisma.XOR<Prisma.InventoryUnitUpdateWithoutShipmentsInput, Prisma.InventoryUnitUncheckedUpdateWithoutShipmentsInput>
+}
+
+export type InventoryUnitUpdateWithoutShipmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  storage?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  imei?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumUnitStatusFieldUpdateOperationsInput | $Enums.UnitStatus
+  dateAdded?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentBranch?: Prisma.BranchUpdateOneRequiredWithoutUnitsNestedInput
+}
+
+export type InventoryUnitUncheckedUpdateWithoutShipmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  storage?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  imei?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumUnitStatusFieldUpdateOperationsInput | $Enums.UnitStatus
+  dateAdded?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentBranchId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type InventoryUnitCreateManyCurrentBranchInput = {
+  id?: string
+  product: string
+  model: string
+  storage: string
+  color: string
+  imei?: string | null
+  serialNumber?: string | null
+  purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.UnitStatus
+  dateAdded?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type InventoryUnitUpdateWithoutCurrentBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  storage?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  imei?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumUnitStatusFieldUpdateOperationsInput | $Enums.UnitStatus
+  dateAdded?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shipments?: Prisma.ShipmentUpdateManyWithoutUnitNestedInput
+}
+
+export type InventoryUnitUncheckedUpdateWithoutCurrentBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  storage?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  imei?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumUnitStatusFieldUpdateOperationsInput | $Enums.UnitStatus
+  dateAdded?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shipments?: Prisma.ShipmentUncheckedUpdateManyWithoutUnitNestedInput
+}
+
+export type InventoryUnitUncheckedUpdateManyWithoutCurrentBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  storage?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  imei?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumUnitStatusFieldUpdateOperationsInput | $Enums.UnitStatus
+  dateAdded?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type InventoryUnitCountOutputType
+ */
+
+export type InventoryUnitCountOutputType = {
+  shipments: number
+}
+
+export type InventoryUnitCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  shipments?: boolean | InventoryUnitCountOutputTypeCountShipmentsArgs
+}
+
+/**
+ * InventoryUnitCountOutputType without action
+ */
+export type InventoryUnitCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InventoryUnitCountOutputType
+   */
+  select?: Prisma.InventoryUnitCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * InventoryUnitCountOutputType without action
+ */
+export type InventoryUnitCountOutputTypeCountShipmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ShipmentWhereInput
+}
 
 
 export type InventoryUnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -541,6 +887,10 @@ export type InventoryUnitSelect<ExtArgs extends runtime.Types.Extensions.Interna
   dateAdded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  currentBranchId?: boolean
+  currentBranch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+  shipments?: boolean | Prisma.InventoryUnit$shipmentsArgs<ExtArgs>
+  _count?: boolean | Prisma.InventoryUnitCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryUnit"]>
 
 
@@ -558,13 +908,22 @@ export type InventoryUnitSelectScalar = {
   dateAdded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  currentBranchId?: boolean
 }
 
-export type InventoryUnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "product" | "model" | "storage" | "color" | "imei" | "serialNumber" | "purchasePrice" | "status" | "dateAdded" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryUnit"]>
+export type InventoryUnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "product" | "model" | "storage" | "color" | "imei" | "serialNumber" | "purchasePrice" | "status" | "dateAdded" | "createdAt" | "updatedAt" | "currentBranchId", ExtArgs["result"]["inventoryUnit"]>
+export type InventoryUnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  currentBranch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+  shipments?: boolean | Prisma.InventoryUnit$shipmentsArgs<ExtArgs>
+  _count?: boolean | Prisma.InventoryUnitCountOutputTypeDefaultArgs<ExtArgs>
+}
 
 export type $InventoryUnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InventoryUnit"
-  objects: {}
+  objects: {
+    currentBranch: Prisma.$BranchPayload<ExtArgs>
+    shipments: Prisma.$ShipmentPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     product: string
@@ -578,6 +937,7 @@ export type $InventoryUnitPayload<ExtArgs extends runtime.Types.Extensions.Inter
     dateAdded: Date
     createdAt: Date
     updatedAt: Date
+    currentBranchId: string
   }, ExtArgs["result"]["inventoryUnit"]>
   composites: {}
 }
@@ -918,6 +1278,8 @@ readonly fields: InventoryUnitFieldRefs;
  */
 export interface Prisma__InventoryUnitClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  currentBranch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  shipments<T extends Prisma.InventoryUnit$shipmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryUnit$shipmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -959,6 +1321,7 @@ export interface InventoryUnitFieldRefs {
   readonly dateAdded: Prisma.FieldRef<"InventoryUnit", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"InventoryUnit", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"InventoryUnit", 'DateTime'>
+  readonly currentBranchId: Prisma.FieldRef<"InventoryUnit", 'String'>
 }
     
 
@@ -975,6 +1338,10 @@ export type InventoryUnitFindUniqueArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the InventoryUnit
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
   /**
    * Filter, which InventoryUnit to fetch.
    */
@@ -994,6 +1361,10 @@ export type InventoryUnitFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
+  /**
    * Filter, which InventoryUnit to fetch.
    */
   where: Prisma.InventoryUnitWhereUniqueInput
@@ -1011,6 +1382,10 @@ export type InventoryUnitFindFirstArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the InventoryUnit
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
   /**
    * Filter, which InventoryUnit to fetch.
    */
@@ -1060,6 +1435,10 @@ export type InventoryUnitFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Exte
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
+  /**
    * Filter, which InventoryUnit to fetch.
    */
   where?: Prisma.InventoryUnitWhereInput
@@ -1107,6 +1486,10 @@ export type InventoryUnitFindManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the InventoryUnit
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
   /**
    * Filter, which InventoryUnits to fetch.
    */
@@ -1156,6 +1539,10 @@ export type InventoryUnitCreateArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
+  /**
    * The data needed to create a InventoryUnit.
    */
   data: Prisma.XOR<Prisma.InventoryUnitCreateInput, Prisma.InventoryUnitUncheckedCreateInput>
@@ -1184,6 +1571,10 @@ export type InventoryUnitUpdateArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the InventoryUnit
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
   /**
    * The data needed to update a InventoryUnit.
    */
@@ -1225,6 +1616,10 @@ export type InventoryUnitUpsertArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
+  /**
    * The filter to search for the InventoryUnit to update in case it exists.
    */
   where: Prisma.InventoryUnitWhereUniqueInput
@@ -1251,6 +1646,10 @@ export type InventoryUnitDeleteArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
+  /**
    * Filter which InventoryUnit to delete.
    */
   where: Prisma.InventoryUnitWhereUniqueInput
@@ -1271,6 +1670,30 @@ export type InventoryUnitDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
+ * InventoryUnit.shipments
+ */
+export type InventoryUnit$shipmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Shipment
+   */
+  select?: Prisma.ShipmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Shipment
+   */
+  omit?: Prisma.ShipmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ShipmentInclude<ExtArgs> | null
+  where?: Prisma.ShipmentWhereInput
+  orderBy?: Prisma.ShipmentOrderByWithRelationInput | Prisma.ShipmentOrderByWithRelationInput[]
+  cursor?: Prisma.ShipmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ShipmentScalarFieldEnum | Prisma.ShipmentScalarFieldEnum[]
+}
+
+/**
  * InventoryUnit without action
  */
 export type InventoryUnitDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1282,4 +1705,8 @@ export type InventoryUnitDefaultArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the InventoryUnit
    */
   omit?: Prisma.InventoryUnitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryUnitInclude<ExtArgs> | null
 }

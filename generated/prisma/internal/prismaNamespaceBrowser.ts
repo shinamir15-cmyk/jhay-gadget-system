@@ -52,7 +52,9 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  InventoryUnit: 'InventoryUnit'
+  Branch: 'Branch',
+  InventoryUnit: 'InventoryUnit',
+  Shipment: 'Shipment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -83,6 +85,18 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const BranchScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  isMain: 'isMain',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
+
+
 export const InventoryUnitScalarFieldEnum = {
   id: 'id',
   product: 'product',
@@ -95,10 +109,24 @@ export const InventoryUnitScalarFieldEnum = {
   status: 'status',
   dateAdded: 'dateAdded',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  currentBranchId: 'currentBranchId'
 } as const
 
 export type InventoryUnitScalarFieldEnum = (typeof InventoryUnitScalarFieldEnum)[keyof typeof InventoryUnitScalarFieldEnum]
+
+
+export const ShipmentScalarFieldEnum = {
+  id: 'id',
+  unitId: 'unitId',
+  fromBranchId: 'fromBranchId',
+  toBranchId: 'toBranchId',
+  shippedById: 'shippedById',
+  batchId: 'batchId',
+  shippedAt: 'shippedAt'
+} as const
+
+export type ShipmentScalarFieldEnum = (typeof ShipmentScalarFieldEnum)[keyof typeof ShipmentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -127,6 +155,15 @@ export const NullsOrder = {
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
+export const BranchOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code'
+} as const
+
+export type BranchOrderByRelevanceFieldEnum = (typeof BranchOrderByRelevanceFieldEnum)[keyof typeof BranchOrderByRelevanceFieldEnum]
+
+
 export const InventoryUnitOrderByRelevanceFieldEnum = {
   id: 'id',
   product: 'product',
@@ -134,8 +171,21 @@ export const InventoryUnitOrderByRelevanceFieldEnum = {
   storage: 'storage',
   color: 'color',
   imei: 'imei',
-  serialNumber: 'serialNumber'
+  serialNumber: 'serialNumber',
+  currentBranchId: 'currentBranchId'
 } as const
 
 export type InventoryUnitOrderByRelevanceFieldEnum = (typeof InventoryUnitOrderByRelevanceFieldEnum)[keyof typeof InventoryUnitOrderByRelevanceFieldEnum]
+
+
+export const ShipmentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  unitId: 'unitId',
+  fromBranchId: 'fromBranchId',
+  toBranchId: 'toBranchId',
+  shippedById: 'shippedById',
+  batchId: 'batchId'
+} as const
+
+export type ShipmentOrderByRelevanceFieldEnum = (typeof ShipmentOrderByRelevanceFieldEnum)[keyof typeof ShipmentOrderByRelevanceFieldEnum]
 

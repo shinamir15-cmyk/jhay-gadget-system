@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Button from "@/components/ui/button";
 
 export default function AddUnitPage() {
   const router = useRouter();
@@ -63,25 +64,25 @@ export default function AddUnitPage() {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="text-2xl font-semibold text-gray-800">Add Unit</h1>
-      <p className="mt-1 text-sm text-gray-500">
-        New units are automatically set to <span className="font-medium">IN STOCK</span>.
+      <h1 className="text-2xl font-semibold tracking-tight text-ink-950">Add Unit</h1>
+      <p className="mt-1 text-sm text-ink-600">
+        New units are automatically set to <span className="font-medium">In Stock</span>.
       </p>
 
       {error && (
-        <div className="mt-4 rounded bg-red-50 px-4 py-2 text-sm text-red-600">
+        <div className="mt-4 rounded-md bg-red-50 px-4 py-2 text-sm text-red-700">
           {error}
         </div>
       )}
 
       <form
         onSubmit={handleSubmit}
-        className="mt-6 grid grid-cols-1 gap-4 rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200 sm:grid-cols-2"
+        className="mt-6 grid grid-cols-1 gap-4 rounded-lg bg-card p-6 shadow-sm ring-1 ring-ink-400/15 sm:grid-cols-2"
       >
         {fields.map((field) => (
           <div key={field.name}>
-            <label className="mb-1 block text-sm font-medium text-gray-700">
-              {field.label} {field.required && <span className="text-red-500">*</span>}
+            <label className="mb-1 block text-sm font-medium text-ink-800">
+              {field.label} {field.required && <span className="text-red-600">*</span>}
             </label>
             <input
               type={field.type ?? "text"}
@@ -91,19 +92,15 @@ export default function AddUnitPage() {
               required={field.required}
               min={field.type === "number" ? 0 : undefined}
               step={field.type === "number" ? "0.01" : undefined}
-              className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-md border border-ink-400/30 px-3 py-2 text-sm text-ink-950 focus:border-brand-600 focus:outline-none"
             />
           </div>
         ))}
 
         <div className="sm:col-span-2">
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded bg-blue-600 py-2 font-medium text-white hover:bg-blue-700 disabled:opacity-50 sm:w-auto sm:px-6"
-          >
-            {loading ? "Saving..." : "Save Unit"}
-          </button>
+          <Button type="submit" disabled={loading} className="w-full sm:w-auto sm:px-6">
+            {loading ? "Saving…" : "Save Unit"}
+          </Button>
         </div>
       </form>
     </div>
