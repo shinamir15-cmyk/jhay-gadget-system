@@ -6,6 +6,8 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
+  const caCert = process.env.DB_SSL_CA;
+
   const adapter = new PrismaMariaDb({
     host: process.env.DB_HOST!,
     port: Number(process.env.DB_PORT ?? 3306),
@@ -15,6 +17,8 @@ function createPrismaClient() {
     connectionLimit: 10,
     acquireTimeout: 10000,
     connectTimeout: 10000,
+    allowPublicKeyRetrieval: true,
+    ...(caCert ? { ssl: { ca: caCert } } : {}),
   });
 
   return new PrismaClient({ adapter });
