@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import ShipmentForm from "./shipment-form";
 
+export const dynamic = "force-dynamic";
+
 export default async function NewShipmentPage() {
   const [units, branches] = await Promise.all([
     prisma.inventoryUnit.findMany({
