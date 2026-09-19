@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { inspect } from "util";
 import { prisma } from "@/lib/prisma";
 import { createSessionToken, SESSION_COOKIE_NAME } from "@/lib/auth";
 
@@ -47,12 +48,12 @@ export async function POST(request: Request) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return response;
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Login error:", inspect(error, { depth: null }));
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
       { status: 500 }
